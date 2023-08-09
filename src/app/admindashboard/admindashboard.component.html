@@ -1,0 +1,192 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 col-lg-12 ml-md-auto px-0">
+        <!-- top nav -->
+        <nav class="w-100 d-flex px-4 py-2 mb-4 shadow-sm">
+          <!-- close sidebar -->
+          <button class="btn py-0 d-lg-none" id="open-sidebar">
+            <span class="bi bi-list text-primary h3"></span>
+          </button>
+          <div class="dropdown ml-auto">
+            <button class="btn py-0 d-flex align-items-center" id="logout-dropdown" data-toggle="dropdown" aria-expanded="false">
+              <span class="bi bi-person text-primary h4"></span>
+              <span class="bi bi-chevron-down ml-1 mb-2 small"></span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right border-0 shadow-sm" aria-labelledby="logout-dropdown">
+              <a class="dropdown-item" href="#">Logout</a>
+              <a class="dropdown-item" href="#">Settings</a>
+            </div>
+          </div>
+        </nav>
+        <!-- main content -->
+        <main class="container-fluid vh-100" [ngClass]="hide>0||hide1>0?'d-none':'d-block'">
+          <section class="row">
+            <div class="col-md-6 col-lg-4">
+              <!-- card -->
+              <article class="p-4 rounded shadow-sm border-left
+                 mb-4">
+                <a class="d-flex align-items-center">
+                  <span class="bi bi-box h5"></span>
+                  <h5 class="ml-2">Total Posts: {{postData.length}}</h5>
+                </a>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="p-4 rounded shadow-sm border-left mb-4">
+                <a (click)="buttonCategory()" class="d-flex align-items-center">
+                  <span class="bi bi-person h5"></span>
+                  <h5 class="ml-2">Add/Manage Categories</h5>
+                </a>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="p-4 rounded shadow-sm border-left mb-4">
+                <a (click)="buttonPosts()" class="d-flex align-items-center">
+                  <span class="bi bi-person-check h5"></span>
+                  <h5 class="ml-2">Add/Manage Posts</h5>
+                </a>
+              </article>
+            </div>
+          </section>
+          
+          <div class="jumbotron jumbotron-fluid rounded bg-white border-0 shadow-sm border-left px-4">
+            <div class="container">
+              <h1 class="display-4 mb-2 text-primary">Simple</h1>
+              <p class="lead text-muted">Simple Admin Dashboard with Bootstrap.</p>
+            </div>
+          </div>
+        </main>
+
+
+        <main class="container-fluid" [ngClass]="hide1>0?'d-block':'d-none'">
+          <div class="d-flex justify-content-between my-3">
+            <h4 class=""><a class="text-primary" (click)="backToDashboard()">Dashboard </a>/ Manage Posts</h4>
+            <button class="btn btn-primary" (click)="onAddPost()">Add Post</button>
+          </div>
+
+          <table class="table table-bordered text-center">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Post Title</th>
+                <th scope="col">Post Description</th>
+                <th scope="col">Post Image</th>
+                <th scope="col">Post Date</th>
+                <th scope="col">Action</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let k of postData">
+                <th scope="row">{{k.id}}</th>
+                <td>{{k.headline}}</td>
+                <td>{{k.description}}</td>
+                <td><img class="img-thumbnail" width="100" height="100" src="{{k.images}}"></td>
+                <td>{{k.datetime}}</td>
+                <td><button class="btn btn-primary" (click)="onEditPostClicked(k.id)">Edit</button> <button class="btn btn-danger ml-3" (click)="deletePostData(k.id)">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+        </main>
+
+        <main class="container-fluid" [ngClass]="hide>0?'d-block':'d-none'">
+          <div class="d-flex justify-content-between my-3">
+            <h4 class=""><a class="text-primary" (click)="backToDashboard()">Dashboard </a>/ Manage Categories</h4>
+            <button class="btn btn-primary" (click)="onAddCategory()">Add Category</button>
+          </div>
+
+          <table class="table table-bordered text-center">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let k of categoriesData">
+                <th scope="row">{{k.id}}</th>
+                <td>{{k.category}}</td>
+                <td><button class="btn btn-primary" (click)="onEditCategoryClicked(k.id)">Edit</button> <button class="btn btn-danger ml-3" (click)="deleteCategoryData(k.id)">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+        </main>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': display}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add row to new table</h4>
+          <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <form #postUploadForm="ngForm" (ngSubmit)="uploadPostData(postUploadForm.value)">
+                <div class="form-group d-flex align-items-center my-2">
+                    <div class="col-md-5">
+                        <label>Post Title: </label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="Enter Post Title..." name="headline" ngModel/>
+                    </div>
+                </div>
+                <div class="form-group d-flex align-items-center my-2">
+                    <div class="col-md-5">
+                        <label>Description: </label>
+                    </div>
+                    <div class="col-md-7">
+                        <textarea class="form-control" placeholder="Enter Post Description..." name="description" ngModel></textarea>
+                    </div>
+                </div>
+                <div class="form-group d-flex align-items-center my-2">
+                    <div class="col-md-5">
+                        <label>Image Link: </label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="Enter Image Link..." name="images" ngModel/>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">{{editMode ? 'Update ' :'Add '}}</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': display1}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add row to new table</h4>
+          <button type="button" class="close" aria-label="Close" (click)="onCloseHandled1()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <form #categoryUploadForm="ngForm" (ngSubmit)="uploadCategoryData(categoryUploadForm.value)">
+                <div class="form-group d-flex align-items-center my-2">
+                    <div class="col-md-5">
+                        <label>Category: </label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="Enter Category..." name="category" ngModel/>
+                    </div>
+                </div>
+                
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">{{editMode1 ? 'Update ' :'Add '}}</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

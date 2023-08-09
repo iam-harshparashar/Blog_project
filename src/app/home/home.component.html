@@ -1,0 +1,100 @@
+<!-- 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    Navbar content
+    <div class="container-fluid d-flex justify-content-right">
+        <a class="navbar-brand" href="#">
+          <img src="./assets/teacher.webp" width="30" height="24" class="d-inline-block align-text-top">
+          Blog Website
+        </a>
+        <div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+              
+            </ul>
+          </div>
+          </div>
+    </div>
+
+</nav> -->
+
+<div class="container my-5">
+    <div class="row d-flex justify-content-center ">
+        <div class="col-md-8 p-4">
+            <div class="row" *ngFor="let post of postData  | filter:datasearch">
+                <div class="card p-0 rounded shadow border-left mb-4">
+                <div class="row g-0">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <div class="col-md-4">
+                      <img src="{{post.images}}" class="img-fluid rounded-start" alt="..." width="500" height="500">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{post.headline}}</h5>
+                        <p class="card-text">{{post.description.slice(0, 100)}}...</p>
+                        <button class="btn btn-primary" (click)="getSinglePost(post.id)" routerLink="/single-view" routerLinkActive="active" ariaCurrentWhenActive="page">Read More</button>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="d-flex justify-content-end align-items-end">
+                      <p class="card-text"><small class="text-muted">Last Updated At: {{post.datetime}}</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+             
+        </div>
+        
+        <div class="col-md-4 p-4">
+            <div class="row">
+                <div class="card p-0 rounded shadow border-left mb-4">
+                    <div class="card-header">
+                      Search
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Type to search" [(ngModel)]="datasearch">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row">
+                <div class="card p-0 rounded shadow border-left mb-4">
+                    <div class="card-header">
+                      Categories
+                    </div>
+                    <div class="card-body">
+                       <ul>
+                        <li *ngFor="let category of categoriesData"><button class="" (click)="categoryClick(category.category)">{{category.category}}</button></li>
+                       </ul>
+                    </div>
+                  </div>
+            </div><div class="row">
+                <div class="card p-0 rounded shadow border-left mb-4">
+                    <div class="card-header">
+                      Recent Posts
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                          <li *ngFor="let post of postData.slice(0,4)">{{post.headline}}</li>
+                        </ul>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

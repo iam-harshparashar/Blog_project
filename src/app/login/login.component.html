@@ -1,0 +1,39 @@
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="container">
+        <h1 class="text-center">Admin Login</h1>
+        <div class="row d-flex justify-content-center align-items-center mt-5">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <h4 class="text-center">Login</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        <form (ngSubmit)="onSubmit()" #login="ngForm" >
+                            
+                            <div class="d-flex justify-content-center align-items-center m-3">
+                                <div class="col-md-4">
+                                    <label>Username: </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="Enter Username..." [(ngModel)]="username" name="userName"/>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center m-3">
+                                <div class="col-md-4">
+                                    <label>Password: </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control" placeholder="Enter Password..." [(ngModel)]="password" name="password"/>
+                                </div>
+                            </div>
+                            <div class="text-center m-3">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
